@@ -1,0 +1,14 @@
+name: CI para integração na branch main
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  validar_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bloquear PRs inválidos para main
+        if: ${{ github.event.pull_request.head.ref != 'develop' }}
+        run: |
+          echo "❌ Apenas merges da branch develop são permitidos na main."
+          exit 1
