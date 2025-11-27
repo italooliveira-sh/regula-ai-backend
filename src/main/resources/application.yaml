@@ -12,7 +12,10 @@ spring:
         jdbc:
           time_zone: UTC
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     open-in-view: false
   config:
     import: optional:file:.env[.properties]
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
