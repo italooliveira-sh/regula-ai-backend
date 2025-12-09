@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: regula-ai-backend
+  datasource:
+    url: 'jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:regula_ai_db}'
+    username: '${DB_USER:postgres}'
+    password: '${DB_PASSWORD:postgres}'
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+  config:
+    import: optional:file:.env.dev[.properties]
