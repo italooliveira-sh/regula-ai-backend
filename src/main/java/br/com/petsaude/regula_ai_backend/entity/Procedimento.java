@@ -1,54 +1,60 @@
 package br.com.petsaude.regula_ai_backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.UUID;
 
+/**
+ * Entidade de Catálogo/Dicionário de Procedimentos.
+ * Os dados são copiados para ItemSolicitacao no momento da criação do pedido,
+ * garantindo imutabilidade do prontuário.
+ */
 @Entity
-@Table(name = "procedimento")
+@Table(name = "procedimentos", indexes = {
+    @Index(name = "idx_procedimentos_codigo", columnList = "codigo"),
+    @Index(name = "idx_procedimentos_sistema", columnList = "sistema")
+})
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Procedimento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
-    @Column(name = "codigo", nullable = false, unique = true, length = 50)
+    @Column(name = "codigo", nullable = false, unique = true, length = 20)
     private String codigo;
 
-    @Column(name = "nome", nullable = false)
+    @Column(name = "nome", nullable = false, length = 500)
     private String nome;
 
+    @Column(name = "sistema", nullable = false, length = 50)
+    private String sistema;
+
+    @Column(name = "descricao", columnDefinition = "TEXT")
+    private String descricao;
+
+    @Column(name = "grupo", length = 100)
+    private String grupo;
+
+    @Column(name = "subgrupo", length = 100)
+    private String subgrupo;
+
     @Column(name = "ativo", nullable = false)
+    @Builder.Default
     private Boolean ativo = true;
-
-    @Column(name = "criterios_encaminhamento", columnDefinition = "jsonb")
-    private String criteriosEncaminhamento;
-
-    @OneToMany(mappedBy = "procedimento")
-    private List<ItemProcedimentoSolicitado> itensSolicitados;
 
     @Column(name = "criado_em", nullable = false, updatable = false)
     private LocalDateTime criadoEm;
 
-    @Column(name = "atualizado_em")
-    private LocalDateTime atualizadoEm;
-
     @PrePersist
     public void prePersist() {
         this.criadoEm = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        this.atualizadoEm = LocalDateTime.now();
     }
 }
