@@ -1,0 +1,13 @@
+**/bin/
+**/build/
+.gradle/
+.git/
+.gitignore
+.gitattributes
+.idea/
+.vscode/
+HELP.md
+.env
+.env.example
+.env.dev
+docker-compose.yaml
