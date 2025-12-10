@@ -9,4 +9,5 @@
 HELP.md
 .env
 .env.example
+.env.dev
 docker-compose.yaml
