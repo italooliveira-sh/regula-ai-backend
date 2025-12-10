@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "service_request_details", indexes = {
-    @Index(name = "idx_srd_solicitacao", columnList = "solicitacao_id"),
+    @Index(name = "idx_srd_solicitacao", columnList = "service_request_id"),
     @Index(name = "idx_srd_code", columnList = "code")
 })
 @Getter
