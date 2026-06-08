@@ -1,6 +1,5 @@
 package br.com.petsaude.regula_ai_backend.entity;
 
-import br.com.petsaude.regula_ai_backend.entity.enums.SexoEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,15 +8,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Entidade que representa um Paciente no sistema.
- * Mapeada para o recurso FHIR Patient.
- * 
- * @see <a href="https://hl7.org/fhir/R4/patient.html">FHIR Patient Resource</a>
+ * Entidade que representa um paciente conforme a estrutura da fila.
  */
 @Entity
 @Table(name = "pacientes", indexes = {
-    @Index(name = "idx_pacientes_cpf", columnList = "cpf"),
-    @Index(name = "idx_pacientes_cartao_sus", columnList = "cartao_sus")
+    @Index(name = "idx_pacientes_cod_usuario", columnList = "cod_usuario")
 })
 @Getter
 @Setter
@@ -31,46 +26,38 @@ public class Paciente {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "nome", nullable = false, length = 255)
-    private String nome;
+    @Column(name = "cod_usuario", nullable = false, unique = true, length = 20)
+    private String codUsuario;
 
-    @Column(name = "cpf", nullable = false, unique = true, length = 14)
-    private String cpf;
+    @Column(name = "numero_prontuario", length = 30)
+    private String numeroProntuario;
 
-    @Column(name = "cartao_sus", unique = true, length = 20)
-    private String cartaoSus;
+    @Column(name = "sexo", length = 10)
+    private String sexo;
 
-    @Column(name = "data_nascimento")
-    private LocalDate dataNascimento;
+    @Column(name = "nascimento")
+    private LocalDate nascimento;
 
-    @Column(name = "sexo", length = 20)
-    @Enumerated(EnumType.STRING)
-    private SexoEnum sexo;
+    @Column(name = "idade")
+    private Integer idade;
 
-    @Column(name = "telefone", length = 20)
-    private String telefone;
+    @Column(name = "bairro", length = 120)
+    private String bairro;
 
-    @Column(name = "email", length = 255)
-    private String email;
-
-    @Column(name = "endereco", length = 500)
-    private String endereco;
-
-    @Column(name = "municipio", length = 100)
+    @Column(name = "municipio", length = 120)
     private String municipio;
 
-    @Column(name = "uf", length = 2)
-    private String uf;
+    @Column(name = "microarea", length = 120)
+    private String microarea;
 
-    @Column(name = "cep", length = 10)
-    private String cep;
-
-    @Column(name = "ativo", nullable = false)
-    @Builder.Default
-    private Boolean ativo = true;
+    @Column(name = "equipe", length = 120)
+    private String equipe;
 
     @Column(name = "criado_em", nullable = false, updatable = false)
     private LocalDateTime criadoEm;
+
+    @Column(name = "atualizado_em")
+    private LocalDateTime atualizadoEm;
 
     @PrePersist
     public void prePersist() {

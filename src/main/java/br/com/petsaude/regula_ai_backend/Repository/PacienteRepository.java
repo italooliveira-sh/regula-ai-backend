@@ -10,11 +10,7 @@ import java.util.UUID;
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
 
-    Optional<Paciente> findByCpf(String cpf);
+    Optional<Paciente> findByCodUsuario(String codUsuario);
 
-    Optional<Paciente> findByCartaoSus(String cartaoSus);
-
-    boolean existsByCpf(String cpf);
-
-    boolean existsByCartaoSus(String cartaoSus);
+    boolean existsByCodUsuario(String codUsuario);
 }
