@@ -3,3 +3,6 @@ spring:
     name: regula-ai-backend
   profiles:
     active: dev
+
+springdoc:
+  default-flat-param-object: true
